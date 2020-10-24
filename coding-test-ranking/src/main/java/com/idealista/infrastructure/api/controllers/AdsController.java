@@ -2,15 +2,28 @@ package com.idealista.infrastructure.api.controllers;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.idealista.application.services.AdsService;
 import com.idealista.infrastructure.api.dto.PublicAd;
 import com.idealista.infrastructure.api.dto.QualityAd;
+import com.idealista.infrastructure.persistence.AdVO;
+import com.idealista.infrastructure.persistence.InMemoryPersistence;;
 
 @RestController
+@RequestMapping("/ads")
 public class AdsController {
 
+	@Autowired
+	AdsService adsService;
+	
+	@Autowired
+	InMemoryPersistence repo;
+	
     //TODO añade url del endpoint
     public ResponseEntity<List<QualityAd>> qualityListing() {
         //TODO rellena el cuerpo del método
@@ -23,9 +36,13 @@ public class AdsController {
         return ResponseEntity.notFound().build();
     }
 
-    //TODO añade url del endpoint
-    public ResponseEntity<Void> calculateScore() {
-        //TODO rellena el cuerpo del método
-        return ResponseEntity.notFound().build();
-    }
+    @RequestMapping(value = "/calculate-score", method = RequestMethod.GET)
+    public  List<AdVO> calculateScore() {
+    	adsService.calculateAllScores();
+    	
+    	return repo.getAds();
+    	
+    	
+    	//return "ok";
+    }  
 }

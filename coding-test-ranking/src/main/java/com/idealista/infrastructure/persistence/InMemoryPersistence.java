@@ -35,5 +35,17 @@ public class InMemoryPersistence {
         pictures.add(new PictureVO(8, "http://www.idealista.com/pictures/8", "HD"));
     }
 
-    //TODO crea los métodos que necesites
+    public List<AdVO> getAds(){
+    	return this.ads;
+    }
+    
+    //se puede mejorar si pasamos la bd a un hashmap
+    public PictureVO getPictureById(Integer id) {
+    	for(int i = 0; i<pictures.size(); i++) {
+    		if(pictures.get(i).getId().equals(id)) {
+    			return pictures.get(i);
+    		}
+    	}
+    	return null;
+    }
 }
