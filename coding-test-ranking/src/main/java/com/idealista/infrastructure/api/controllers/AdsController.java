@@ -28,7 +28,7 @@ public class AdsController {
         return "Aqui ira el token";
     }
 	
-	//TODO añade url del endpoint
+	@RequestMapping(value = "/quality-listing", method = RequestMethod.GET)
     public ResponseEntity<List<QualityAd>> qualityListing() {
         //TODO rellena el cuerpo del método
         return ResponseEntity.notFound().build();
@@ -36,12 +36,12 @@ public class AdsController {
 
     @RequestMapping(value = "/public-listing", method = RequestMethod.GET)
     public ResponseEntity<List<PublicAd>> publicListing() {
-    	 return ResponseEntity.notFound().build();
+    	List<PublicAd> result = adsService.getAdsForPublicListing();
+    	 return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/calculate-scores", method = RequestMethod.POST)
-    public  ResponseEntity<String> calculateScores() {
-    	
+    public  ResponseEntity<String> calculateScores() {	
     	if(adsService.calculateAllScores()) 
     		return ResponseEntity.ok().build();
     	else

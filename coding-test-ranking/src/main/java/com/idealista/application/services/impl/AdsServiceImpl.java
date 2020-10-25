@@ -1,5 +1,6 @@
 package com.idealista.application.services.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -30,6 +31,8 @@ public class AdsServiceImpl implements AdsService{
 	@Autowired
 	InMemoryPersistence inMemoryPersistence;
 
+	
+	/******************************Service implementations*******************************/
 	@Override
 	public Boolean calculateAllScores() {
 		List<AdVO> currentAds = inMemoryPersistence.getAds();
@@ -69,6 +72,27 @@ public class AdsServiceImpl implements AdsService{
 		return inMemoryPersistence.getAds();
 	}
 
+	@Override
+	public List<PublicAd> getAdsForPublicListing(){
+		
+		List<AdVO> Ads = inMemoryPersistence.getRelevantAds();
+		List<PublicAd> adsResult = new ArrayList<PublicAd>();
+		
+		for (AdVO ad : Ads) {
+			PublicAd publicAd = new PublicAd();
+			publicAd.setId(ad.getId());
+			publicAd.setTypology(ad.getTypology());
+			publicAd.setDescription(ad.getDescription());
+			publicAd.setHouseSize(ad.getHouseSize());
+			publicAd.setGardenSize(ad.getGardenSize());
+			publicAd.setPictureUrls(inMemoryPersistence.getPicturesUrlByAd(ad));
+			
+			adsResult.add(publicAd);
+		}
+		return adsResult;
+	}
+	
+	/******************************Logic methods*******************************/
 	private AdVO checkIrrelevantCase(AdVO adVO) {
 		if(adVO.getScore()<40) {
 			Date currentDate = new Date();

@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public class InMemoryPersistence {
@@ -72,6 +73,23 @@ public class InMemoryPersistence {
 			}
 		}
 		return null;
+	}
+	
+	public List<AdVO> getRelevantAds(){
+		List<AdVO> relevantAds = ads.stream()	
+				.filter(ad -> ad.getScore()>=40)
+				.collect(Collectors.toList());
+		
+		return relevantAds;		
+	}
+
+	public List<String> getPicturesUrlByAd(AdVO ad) {
+		List <String> result = new ArrayList<String>();
+		for(int i = 0; i < ad.getPictures().size();i++) {
+			String URL = getPictureById(ad.getPictures().get(i)).getUrl();
+			result.add(URL);
+		}
+		return result;
 	}
 
 
