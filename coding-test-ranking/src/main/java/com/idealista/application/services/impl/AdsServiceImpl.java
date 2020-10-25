@@ -2,6 +2,7 @@ package com.idealista.application.services.impl;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,7 +29,7 @@ public class AdsServiceImpl implements AdsService{
 	InMemoryPersistence inMemoryPersistence;
 
 	@Override
-	public void calculateAllScores() {
+	public List<AdVO> calculateAllScores() {
 
 		List<AdVO> currentAds = inMemoryPersistence.getAds();
 
@@ -50,15 +51,28 @@ public class AdsServiceImpl implements AdsService{
 			
 			score = scoreByPictures + scoreByDescription + scoreByCompleteAd;
 			
+			adVO.setScore(score);
 			
-			System.out.println(score);
+			//Checking irrelevant cases
+			adVO = checkIrrelevantCase(adVO);
+				
+			inMemoryPersistence.updateAdVO(adVO);
 
 		}
-
-
+		
+		return inMemoryPersistence.getAds();
 	}
 
-	//
+	private AdVO checkIrrelevantCase(AdVO adVO) {
+		if(adVO.getScore()<40) {
+			Date currentDate = new Date();
+			adVO.setIrrelevantSince(currentDate);
+		}else {
+			adVO.setIrrelevantSince(null);
+		}
+		return adVO;
+	}
+
 	private Integer getScoreByPicturesQuality(List<Integer> pictures) {
 		Integer picturesScore = 0;
 

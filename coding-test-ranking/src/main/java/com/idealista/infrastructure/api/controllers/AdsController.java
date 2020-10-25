@@ -24,7 +24,14 @@ public class AdsController {
 	@Autowired
 	InMemoryPersistence repo;
 	
-    //TODO añade url del endpoint
+    
+	@RequestMapping(value = "/auth", method = RequestMethod.POST)
+    public String getToken() {
+        //TODO rellena el cuerpo del método
+        return "Aqui ira el token";
+    }
+	
+	//TODO añade url del endpoint
     public ResponseEntity<List<QualityAd>> qualityListing() {
         //TODO rellena el cuerpo del método
         return ResponseEntity.notFound().build();
@@ -36,13 +43,14 @@ public class AdsController {
         return ResponseEntity.notFound().build();
     }
 
-    @RequestMapping(value = "/calculate-score", method = RequestMethod.GET)
-    public  List<AdVO> calculateScore() {
-    	adsService.calculateAllScores();
-    	
+    @RequestMapping(value = "/calculate-scores", method = RequestMethod.POST)
+    public  List<AdVO> calculateScores() {
+    	return adsService.calculateAllScores();	
+    } 
+    
+    @RequestMapping(value = "/test", method = RequestMethod.POST)
+    public List<AdVO> test() {
     	return repo.getAds();
     	
-    	
-    	//return "ok";
     }  
 }
