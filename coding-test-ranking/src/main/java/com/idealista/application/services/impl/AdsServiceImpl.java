@@ -3,6 +3,7 @@ package com.idealista.application.services.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -77,6 +78,10 @@ public class AdsServiceImpl implements AdsService{
 	public List<PublicAd> getAdsForPublicListing(){
 		
 		List<AdVO> Ads = inMemoryPersistence.getRelevantAds();
+		
+		//Sorting by score desc
+		Collections.sort(Ads, Comparator.comparingInt(AdVO::getScore).reversed());
+		
 		List<PublicAd> adsResult = new ArrayList<PublicAd>();
 		
 		for (AdVO ad : Ads) {
@@ -90,6 +95,8 @@ public class AdsServiceImpl implements AdsService{
 			
 			adsResult.add(publicAd);
 		}
+		
+		
 		return adsResult;
 	}
 	
