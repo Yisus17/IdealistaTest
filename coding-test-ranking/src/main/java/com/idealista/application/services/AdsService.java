@@ -13,6 +13,6 @@ public interface AdsService {
 	
 	public List <AdVO> getAllAds();
 
-	
+	public List<PublicAd> getAdsForPublicListing();
 
 }
