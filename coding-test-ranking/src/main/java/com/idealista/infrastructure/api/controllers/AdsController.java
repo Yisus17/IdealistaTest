@@ -46,6 +46,5 @@ public class AdsController {
     		return ResponseEntity.ok().build();
     	else
     		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("ERROR: An error has occurred calculating scores");
-    } 
-      
+    }   
 }
