@@ -30,8 +30,8 @@ public class AdsController {
 	
 	@RequestMapping(value = "/quality-listing", method = RequestMethod.GET)
     public ResponseEntity<List<QualityAd>> qualityListing() {
-        //TODO rellena el cuerpo del método
-        return ResponseEntity.notFound().build();
+		List<QualityAd> result = adsService.getAdsForQualityListing();
+   	 	return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/public-listing", method = RequestMethod.GET)
