@@ -82,6 +82,14 @@ public class InMemoryPersistence {
 		
 		return relevantAds;		
 	}
+	
+	public List<AdVO> getIrrelevantAds(){
+		List<AdVO> irrrelevantAds = ads.stream()	
+				.filter(ad -> ad.getScore()<40)
+				.collect(Collectors.toList());
+		
+		return irrrelevantAds;		
+	}
 
 	public List<String> getPicturesUrlByAd(AdVO ad) {
 		List <String> result = new ArrayList<String>();

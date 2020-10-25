@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.idealista.application.services.AdsService;
 import com.idealista.infrastructure.api.dto.PublicAd;
+import com.idealista.infrastructure.api.dto.QualityAd;
 import com.idealista.infrastructure.persistence.AdVO;
 import com.idealista.infrastructure.persistence.InMemoryPersistence;
 import com.idealista.infrastructure.persistence.PictureVO;
@@ -91,6 +92,30 @@ public class AdsServiceImpl implements AdsService{
 		}
 		return adsResult;
 	}
+	
+
+
+	@Override
+	public List<QualityAd> getAdsForQualityListing() {
+		List<AdVO> Ads = inMemoryPersistence.getIrrelevantAds();
+		List<QualityAd> adsResult = new ArrayList<QualityAd>();
+		
+		for (AdVO ad : Ads) {
+			QualityAd qualityAd = new QualityAd();
+			qualityAd.setId(ad.getId());
+			qualityAd.setTypology(ad.getTypology());
+			qualityAd.setDescription(ad.getDescription());
+			qualityAd.setHouseSize(ad.getHouseSize());
+			qualityAd.setGardenSize(ad.getGardenSize());
+			qualityAd.setPictureUrls(inMemoryPersistence.getPicturesUrlByAd(ad));
+			qualityAd.setScore(ad.getScore());
+			qualityAd.setIrrelevantSince(ad.getIrrelevantSince());
+			adsResult.add(qualityAd);
+		}
+		return adsResult;
+	}
+
+
 	
 	/******************************Logic methods*******************************/
 	private AdVO checkIrrelevantCase(AdVO adVO) {
@@ -212,9 +237,6 @@ public class AdsServiceImpl implements AdsService{
 		}
 		
 		return 40;
-	}
-
-
-	
+	}	
 
 }
