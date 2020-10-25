@@ -10,9 +10,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.idealista.application.services.AdsService;
+import com.idealista.infrastructure.api.dto.PublicAd;
 import com.idealista.infrastructure.persistence.AdVO;
 import com.idealista.infrastructure.persistence.InMemoryPersistence;
 import com.idealista.infrastructure.persistence.PictureVO;
@@ -29,8 +31,7 @@ public class AdsServiceImpl implements AdsService{
 	InMemoryPersistence inMemoryPersistence;
 
 	@Override
-	public List<AdVO> calculateAllScores() {
-
+	public Boolean calculateAllScores() {
 		List<AdVO> currentAds = inMemoryPersistence.getAds();
 
 		for (AdVO adVO : currentAds) {
@@ -59,7 +60,12 @@ public class AdsServiceImpl implements AdsService{
 			inMemoryPersistence.updateAdVO(adVO);
 
 		}
-		
+		return true;
+	}
+	
+	
+	@Override
+	public List<AdVO> getAllAds(){
 		return inMemoryPersistence.getAds();
 	}
 
@@ -183,5 +189,8 @@ public class AdsServiceImpl implements AdsService{
 		
 		return 40;
 	}
+
+
+	
 
 }

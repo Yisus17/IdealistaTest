@@ -3,6 +3,7 @@ package com.idealista.infrastructure.api.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,11 +21,7 @@ public class AdsController {
 
 	@Autowired
 	AdsService adsService;
-	
-	@Autowired
-	InMemoryPersistence repo;
-	
-    
+	 
 	@RequestMapping(value = "/auth", method = RequestMethod.POST)
     public String getToken() {
         //TODO rellena el cuerpo del método
@@ -37,20 +34,18 @@ public class AdsController {
         return ResponseEntity.notFound().build();
     }
 
-    //TODO añade url del endpoint
+    @RequestMapping(value = "/public-listing", method = RequestMethod.GET)
     public ResponseEntity<List<PublicAd>> publicListing() {
-        //TODO rellena el cuerpo del método
-        return ResponseEntity.notFound().build();
+    	 return ResponseEntity.notFound().build();
     }
 
     @RequestMapping(value = "/calculate-scores", method = RequestMethod.POST)
-    public  List<AdVO> calculateScores() {
-    	return adsService.calculateAllScores();	
-    } 
-    
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
-    public List<AdVO> test() {
-    	return repo.getAds();
+    public  ResponseEntity<String> calculateScores() {
     	
-    }  
+    	if(adsService.calculateAllScores()) 
+    		return ResponseEntity.ok().build();
+    	else
+    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("ERROR: An error has occurred calculating scores");
+    } 
+      
 }
