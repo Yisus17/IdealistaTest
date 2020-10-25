@@ -31,6 +31,8 @@ public class AdsServiceImpl implements AdsService{
 	@Autowired
 	InMemoryPersistence inMemoryPersistence;
 
+	
+	/******************************Service implementations*******************************/
 	@Override
 	public Boolean calculateAllScores() {
 		List<AdVO> currentAds = inMemoryPersistence.getAds();
@@ -90,7 +92,7 @@ public class AdsServiceImpl implements AdsService{
 		return adsResult;
 	}
 	
-	
+	/******************************Logic methods*******************************/
 	private AdVO checkIrrelevantCase(AdVO adVO) {
 		if(adVO.getScore()<40) {
 			Date currentDate = new Date();
