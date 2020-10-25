@@ -33,21 +33,24 @@ public class AdsServiceImpl implements AdsService{
 		List<AdVO> currentAds = inMemoryPersistence.getAds();
 
 		for (AdVO adVO : currentAds) {
+			Integer score = 0, scoreByPictures = 0, scoreByDescription = 0, scoreByCompleteAd = 0;
 
 			//Score by pictures
-			Integer score = 0;
 			if(adVO.getPictures().isEmpty()) {
-				score+=-10;
+				scoreByPictures = -10;
 			}else {
-				score+=getScoreByPicturesQuality(adVO.getPictures());
+				scoreByPictures = getScoreByPicturesQuality(adVO.getPictures());
 			}
 
 			//Score by description
-			score += getScoreForDescription(adVO.getDescription(), adVO.getTypology());
+			scoreByDescription = getScoreForDescription(adVO.getDescription(), adVO.getTypology());
 
 			//Score by complete ad
-			Integer scoreAux = getScoreByCompleteAd(adVO);
-			score += scoreAux;
+			scoreByCompleteAd = getScoreByCompleteAd(adVO);
+			
+			score = scoreByPictures + scoreByDescription + scoreByCompleteAd;
+			
+			
 			System.out.println(score);
 
 		}
@@ -115,47 +118,55 @@ public class AdsServiceImpl implements AdsService{
 		return score;
 	}
 
-
+	//Returns 40points if an Ad is completed, else return 0 points
 	private Integer getScoreByCompleteAd(AdVO adVO) {
-
+		
 		//Picture check
 		if(adVO.getPictures().isEmpty()) {
 			return 0;
 		}
 		
+		//Flat case check
+		if(adVO.getTypology().toUpperCase().equals("FLAT")) {
+			if(adVO.getHouseSize() != null) {
+				if(adVO.getHouseSize() < 1) {
+					return 0;
+				}
+			}else {
+				return 0;
+			}
+		}
 		
-		switch (adVO.getTypology()) {
-		case "CHALET":
+		//Chalet case check
+		if(adVO.getTypology().toUpperCase().equals("CHALET")) {
+			//Checking house size
 			if(adVO.getHouseSize() != null) {
-				if(adVO.getHouseSize()<=0) {
+				if(adVO.getHouseSize() < 1) {
 					return 0;
 				}
 			}else {
 				return 0;
 			}
-			
+			//Checking garden size
 			if(adVO.getGardenSize() != null) {
-				if(adVO.getGardenSize()<=0) {
+				if(adVO.getGardenSize() < 1) {
 					return 0;
 				}
 			}else {
 				return 0;
 			}
-			break;
-		case "FLAT":
-			if(adVO.getHouseSize() != null) {
-				if(adVO.getHouseSize()<=0) {
-					return 0;
-				}
-			}else {
-				return 0;
-			}
-			break;
 		}
 
-
-
-
+		if(!adVO.getTypology().toUpperCase().equals("GARAGE")) {
+			if(adVO.getDescription() != null) {
+				if(adVO.getDescription().length() < 1 ) {
+					return 0;
+				}
+			}else {
+				return 0;
+			}
+		}
+		
 		return 40;
 	}
 
