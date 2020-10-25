@@ -1,8 +1,9 @@
-package com.idealista.infrastructure.api;
+package com.idealista.infrastructure.api.dto;
 
+import java.util.Date;
 import java.util.List;
 
-public class PublicAd {
+public class QualityAd {
 
     private Integer id;
     private String typology;
@@ -10,6 +11,8 @@ public class PublicAd {
     private List<String> pictureUrls;
     private Integer houseSize;
     private Integer gardenSize;
+    private Integer score;
+    private Date irrelevantSince;
 
     public Integer getId() {
         return id;
@@ -57,5 +60,21 @@ public class PublicAd {
 
     public void setGardenSize(Integer gardenSize) {
         this.gardenSize = gardenSize;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public Date getIrrelevantSince() {
+        return irrelevantSince;
+    }
+
+    public void setIrrelevantSince(Date irrelevantSince) {
+        this.irrelevantSince = irrelevantSince;
     }
 }
