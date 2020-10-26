@@ -1,5 +1,11 @@
 package com.idealista.application.services.impl;
 
+/** AdsService implementation logic.
+ * @author Jesús Arévalo
+ * @version 1.0
+ * @since 1.0
+*/
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -57,14 +63,18 @@ public class AdsServiceImpl implements AdsService{
 			
 			score = scoreByPictures + scoreByDescription + scoreByCompleteAd;
 			
+			//Negative Fix
+			if(score < 0)
+				score = 0;
 			adVO.setScore(score);
 			
 			//Checking irrelevant cases
 			adVO = checkIrrelevantCase(adVO);
-				
+			
 			inMemoryPersistence.updateAdVO(adVO);
 
 		}
+		inMemoryPersistence.MarkScoreCalculated();
 		return true;
 	}
 	
@@ -75,7 +85,7 @@ public class AdsServiceImpl implements AdsService{
 	}
 
 	@Override
-	public List<PublicAd> getAdsForPublicListing(){
+	public List<PublicAd> getAdsForPublicListing() throws Exception{
 		
 		List<AdVO> Ads = inMemoryPersistence.getRelevantAds();
 		
@@ -95,7 +105,7 @@ public class AdsServiceImpl implements AdsService{
 			
 			adsResult.add(publicAd);
 		}
-		
+		inMemoryPersistence.MarkScoreCalculated();
 		
 		return adsResult;
 	}
@@ -103,7 +113,7 @@ public class AdsServiceImpl implements AdsService{
 
 
 	@Override
-	public List<QualityAd> getAdsForQualityListing() {
+	public List<QualityAd> getAdsForQualityListing() throws Exception {
 		List<AdVO> Ads = inMemoryPersistence.getIrrelevantAds();
 		List<QualityAd> adsResult = new ArrayList<QualityAd>();
 		

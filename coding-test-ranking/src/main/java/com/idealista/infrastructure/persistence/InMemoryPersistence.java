@@ -14,6 +14,7 @@ public class InMemoryPersistence {
 
 	private List<AdVO> ads;
 	private List<PictureVO> pictures;
+	private Boolean scoreCalculated;
 
 	public InMemoryPersistence() {
 		ads = new ArrayList<AdVO>();
@@ -35,6 +36,8 @@ public class InMemoryPersistence {
 		pictures.add(new PictureVO(6, "http://www.idealista.com/pictures/6", "SD"));
 		pictures.add(new PictureVO(7, "http://www.idealista.com/pictures/7", "SD"));
 		pictures.add(new PictureVO(8, "http://www.idealista.com/pictures/8", "HD"));
+		
+		scoreCalculated = false;
 	}
 
 	public List<AdVO> getAds(){
@@ -75,20 +78,24 @@ public class InMemoryPersistence {
 		return null;
 	}
 	
-	public List<AdVO> getRelevantAds(){
+	public List<AdVO> getRelevantAds() throws Exception{
+		if(scoreCalculated) {
 		List<AdVO> relevantAds = ads.stream()	
 				.filter(ad -> ad.getScore()>=40)
 				.collect(Collectors.toList());
-		
-		return relevantAds;		
+			return relevantAds;		
+		}
+		throw new Exception("Error getting relevant Ads, launch calculate-score service and try again ");
 	}
 	
-	public List<AdVO> getIrrelevantAds(){
-		List<AdVO> irrrelevantAds = ads.stream()	
-				.filter(ad -> ad.getScore()<40)
-				.collect(Collectors.toList());
-		
-		return irrrelevantAds;		
+	public List<AdVO> getIrrelevantAds() throws Exception{
+		if(scoreCalculated) {
+			List<AdVO> irrrelevantAds = ads.stream()	
+					.filter(ad -> ad.getScore()<40)
+					.collect(Collectors.toList());
+			return irrrelevantAds;		
+		}
+		throw new Exception("Error getting irrelevant Ads, launch calculate-score service and try again ");
 	}
 
 	public List<String> getPicturesUrlByAd(AdVO ad) {
@@ -100,6 +107,9 @@ public class InMemoryPersistence {
 		return result;
 	}
 
+	public void MarkScoreCalculated() {
+		scoreCalculated = true;
+	}
 
 
 }

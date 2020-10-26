@@ -1,5 +1,11 @@
 package com.idealista.application.services;
 
+/** Business logic about ads managment
+ * @author Jesús Arévalo
+ * @version 1.0
+ * @since 1.0
+*/
+
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -14,8 +20,8 @@ public interface AdsService {
 	
 	public List <AdVO> getAllAds();
 
-	public List<PublicAd> getAdsForPublicListing();
+	public List<PublicAd> getAdsForPublicListing() throws Exception;
 
-	public List<QualityAd> getAdsForQualityListing();
+	public List<QualityAd> getAdsForQualityListing() throws Exception;
 
 }
