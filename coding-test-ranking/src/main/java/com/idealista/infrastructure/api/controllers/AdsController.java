@@ -22,20 +22,14 @@ public class AdsController {
 	@Autowired
 	AdsService adsService;
 	 
-	@RequestMapping(value = "/auth", method = RequestMethod.POST)
-    public String getToken() {
-        //TODO rellena el cuerpo del método
-        return "Aqui ira el token";
-    }
-	
 	@RequestMapping(value = "/quality-listing", method = RequestMethod.GET)
-    public ResponseEntity<List<QualityAd>> qualityListing() {
+    public ResponseEntity<List<QualityAd>> qualityListing() throws Exception {
 		List<QualityAd> result = adsService.getAdsForQualityListing();
    	 	return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/public-listing", method = RequestMethod.GET)
-    public ResponseEntity<List<PublicAd>> publicListing() {
+    public ResponseEntity<List<PublicAd>> publicListing() throws Exception {
     	List<PublicAd> result = adsService.getAdsForPublicListing();
     	 return new ResponseEntity<>(result, HttpStatus.OK);
     }

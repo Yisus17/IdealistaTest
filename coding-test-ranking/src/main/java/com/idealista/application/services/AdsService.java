@@ -20,8 +20,8 @@ public interface AdsService {
 	
 	public List <AdVO> getAllAds();
 
-	public List<PublicAd> getAdsForPublicListing();
+	public List<PublicAd> getAdsForPublicListing() throws Exception;
 
-	public List<QualityAd> getAdsForQualityListing();
+	public List<QualityAd> getAdsForQualityListing() throws Exception;
 
 }
