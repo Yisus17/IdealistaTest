@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.idealista.application.services.AdsService;
 import com.idealista.infrastructure.api.dto.PublicAd;
 import com.idealista.infrastructure.api.dto.QualityAd;
-import com.idealista.infrastructure.persistence.AdVO;
-import com.idealista.infrastructure.persistence.InMemoryPersistence;;
 
 @RestController
 @RequestMapping("/ads")

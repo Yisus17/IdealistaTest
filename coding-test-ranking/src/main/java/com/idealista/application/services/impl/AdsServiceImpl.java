@@ -74,6 +74,7 @@ public class AdsServiceImpl implements AdsService{
 			inMemoryPersistence.updateAdVO(adVO);
 
 		}
+		inMemoryPersistence.MarkScoreCalculated();
 		return true;
 	}
 	
