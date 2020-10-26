@@ -1,4 +1,4 @@
-# Ad Ranking Challenge
+# Ad Ranking Challenge 💻
 
 Este repositorio contiene un API desarrollada a partir del esquema propuesto en el challenge, para desarrollar un servicio que se encargue de medir la calidad de los anuncios. 
 
