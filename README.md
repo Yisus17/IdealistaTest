@@ -6,7 +6,9 @@ El proyecto se reorganizó siguiendo un esquema de arquitectura de capas tal que
 
 - **Una capa de datos (Package Persistence)** con InMemoryPersitence.java simulando una BD
 - **Una capa de servicios (Package Services)** donde abstraemos la lógica de negocio para el ranking de anuncios
-- **Una capa de presentación (Package Controllers)**, en este caso es una REST API por lo que su capa de presentación queda resumida a endpoints cuyas respuestas se presentan en formato JSON en los servicios que lo ameriten
+- **Una capa de presentación (Package Controllers)**, en este caso es una REST API por lo que su capa de presentación queda resumida a endpoints cuyas respuestas se presentan en formato JSON en los servicios que lo ameriten.
+
+Se utilizó Git-flow como estrategia de ramas.
 
 ## Documentación
 
