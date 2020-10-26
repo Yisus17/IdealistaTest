@@ -1,5 +1,11 @@
 package com.idealista.application.services;
 
+/** Business logic about ads managment
+ * @author Jesús Arévalo
+ * @version 1.0
+ * @since 1.0
+*/
+
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;

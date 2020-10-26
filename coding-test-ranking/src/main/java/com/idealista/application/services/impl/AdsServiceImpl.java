@@ -1,5 +1,11 @@
 package com.idealista.application.services.impl;
 
+/** AdsService implementation logic.
+ * @author Jesús Arévalo
+ * @version 1.0
+ * @since 1.0
+*/
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
